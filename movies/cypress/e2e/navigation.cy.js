@@ -16,12 +16,31 @@ describe("Navigation", () => {
   beforeEach(() => {
     cy.visit("/");
   });
+  //clicking movie details from home page
   describe("From the home page to a movie's details", () => {
     it("navigates to the movie details page and change browser URL", () => {
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
     });
   });
+  //clicking movie details from favourites page
+  describe("From the favourite page to a movie's details", () => {
+    it("clicks heart, then clicks then navigates to favrites page and clicks more info to go to movie details page", () => {
+        cy.get('svg[data-testid="FavoriteIcon"]').eq(0).click();
+        cy.visit("/movies/favorites");
+      cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
+      cy.url().should("include", `/movies/${movies[0].id}`);
+    });
+  });
+  //clicking movie details from upcoming page
+  describe("From the upcoming page to a movie's details", () => {
+    it("navigates to the movie details page and change browser URL", () => {
+        cy.visit("/movies/upcoming");
+      cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
+      cy.url().should("include", `/movies/${movies[0].id}`);
+    });
+  });
+
   describe("Using the site header", () => {
     describe("when the viewport is desktop scale", () => {
       it("navigate via the button links", () => {
@@ -48,21 +67,7 @@ describe("Navigation", () => {
       }
     );
   });
-  describe("From the favorites page to a movie's details", () => {
-    beforeEach(() => {
-      // Navigate to the Favorites page (replace with the actual navigation steps)
-      cy.get("button").contains("Favorites").click();
-      cy.url().should("include", `/favorites`);
-    });
   
-    it("navigates to a movie's details page from the favorites list", () => {
-      // Click on a movie in the favorites list (replace with your actual selector)
-      cy.get(".favorite-movie").eq(0).click();
-  
-      // Verify that the URL changes to the movie's details page
-      cy.url().should("include", `/movies/${movieId}`); // Replace 'movieId' with the actual movie ID
-    });
-  });
   describe("The forward/backward links", () => {
     beforeEach(() => {
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
@@ -72,6 +77,39 @@ describe("Navigation", () => {
       cy.url().should("not.include", `/movies/${movies[0].id}`);
       cy.get("svg[data-testid='ArrowForwardIcon'").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
+    });
+  });
+
+  //in movie details click reviews button bottom right corner
+  describe("From home page open first full review", () => {
+    it("open movie details and click reviews button and navigate to first review in full page", () => {
+     
+        cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
+        cy.url().should("include", `/movies/${movies[0].id}`);
+        cy.get(".MuiButtonBase-root").contains("Reviews").click();
+        cy.get(".MuiTableBody-root").contains("Full Review").click();
+        cy.url().should("include", `/reviews/653d0e9abc2cb300aca35d5b`);
+    });
+  });
+
+
+  //clicking movie home icon from movie details page and full review page
+  describe("Go to movie home website", () => {
+    it("open movie details and click the house icon", () => {
+     
+        cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
+        cy.url().should("include", `/movies/${movies[0].id}`);
+        cy.get(".MuiSvgIcon-root").contains('svg[data-testid="HomeIcon"]').click();
+        //ask teacher how i can get access to the icons because my tests cant find them
+        cy.url().should("include", `https://www.fivenightsatfreddys.movie/`);
+    }),
+    it("open movie reviews page and click the house icon", () => {
+     
+        cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
+        cy.url().should("include", `/movies/${movies[0].id}`);
+        cy.get(".MuiButtonBase-root").contains("Reviews").click();
+        cy.get(".MuiTableBody-root").contains("Full Review").click();
+        cy.url().should("include", `/reviews/653d0e9abc2cb300aca35d5b`);
     });
   });
 });
