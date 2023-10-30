@@ -28,7 +28,7 @@ describe("Navigation", () => {
     it("clicks heart, then clicks then navigates to favrites page and clicks more info to go to movie details page", () => {
         cy.get("button[aria-label='add to favorites']").eq(0).click();
        
-        cy.visit("/movies/favorites");
+        cy.get("button").contains("Favorites").click();
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
     });
