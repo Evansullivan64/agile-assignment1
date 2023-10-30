@@ -29,6 +29,9 @@ describe("Navigation", () => {
     it("navigates to the movie details page and change browser URL", () => {
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -51,6 +54,9 @@ describe("Navigation", () => {
         cy.get("button").contains("Favorites").click();
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -72,6 +78,9 @@ describe("Navigation", () => {
         cy.visit("/movies/upcoming");
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -94,6 +103,9 @@ describe("Navigation", () => {
         cy.url().should("include", `/favorites`);
         cy.get("button").contains("Home").click();
         cy.url().should("include", `/`);
+        if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
       });
     });
 
@@ -115,6 +127,9 @@ describe("Navigation", () => {
           cy.url().should("include", `/favorites`);
           cy.get("li").contains('Home').click();
           cy.url().should("include", `/`);
+          if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
         });
       }
     );
@@ -135,10 +150,16 @@ describe("Navigation", () => {
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
     });
     it("navigates between the movies detail page and the Home page.", () => {
-      cy.get("svg[data-testid='ArrowBackIcon'").click();
-      cy.url().should("not.include", `/movies/${movies[0].id}`);
-      cy.get("svg[data-testid='ArrowForwardIcon'").click();
-      cy.url().should("include", `/movies/${movies[0].id}`);
+        cy.get("svg[data-testid='ArrowBackIcon'").click();
+        cy.url().should("not.include", `/movies/${movies[0].id}`);
+        if (!Cypress.config("showPassed")) {
+          cy.log("The back navigation test has passed silently.");
+        }
+        cy.get("svg[data-testid='ArrowForwardIcon'").click();
+        cy.url().should("include", `/movies/${movies[0].id}`);
+        if (!Cypress.config("showPassed")) {
+          cy.log("The forward navigation test has passed silently.");
+        }
     });
   });
 
@@ -161,6 +182,9 @@ describe("Navigation", () => {
         cy.get(".MuiButtonBase-root").contains("Reviews").click();
         cy.get(".MuiTableBody-root").contains("Full Review").click();
         cy.url().should("include", `/reviews/653d0e9abc2cb300aca35d5b`);
+        if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
     });
   });
 
@@ -181,7 +205,9 @@ describe("Navigation", () => {
         cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
         cy.url().should("include", `/movies/${movies[0].id}`);
         cy.get("a").click();
-      
+        if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
   
     });
 });
@@ -205,6 +231,9 @@ describe("Navigation", () => {
         cy.get(".MuiTableBody-root").contains("Full Review").click();
         cy.url().should("include", `/reviews/653d0e9abc2cb300aca35d5b`);
         cy.get("a").click();
+        if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
        
     });
 })
