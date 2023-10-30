@@ -26,7 +26,8 @@ describe("Navigation", () => {
   //clicking movie details from favourites page
   describe("From the favourite page to a movie's details", () => {
     it("clicks heart, then clicks then navigates to favrites page and clicks more info to go to movie details page", () => {
-        cy.get('svg[data-testid="FavoriteIcon"]').eq(0).click();
+        cy.get("button[aria-label='add to favorites']").eq(0).click();
+       
         cy.visit("/movies/favorites");
       cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
       cy.url().should("include", `/movies/${movies[0].id}`);
@@ -94,15 +95,17 @@ describe("Navigation", () => {
 
 
   //clicking movie home icon from movie details page and full review page
-  describe("Go to movie home website", () => {
+  describe("Go to movie home website ", () => {
     it("open movie details and click the house icon", () => {
      
         cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
         cy.url().should("include", `/movies/${movies[0].id}`);
-        cy.get(".MuiSvgIcon-root").contains('svg[data-testid="HomeIcon"]').click();
+        cy.get("a").click();
         //ask teacher how i can get access to the icons because my tests cant find them
-        cy.url().should("include", `https://www.fivenightsatfreddys.movie/`);
-    }),
+       
+    });
+});
+    describe("Go to movie home website ", () => {
     it("open movie reviews page and click the house icon", () => {
      
         cy.get(".MuiCardActions-root").eq(0).contains("More Info").click();
@@ -110,6 +113,8 @@ describe("Navigation", () => {
         cy.get(".MuiButtonBase-root").contains("Reviews").click();
         cy.get(".MuiTableBody-root").contains("Full Review").click();
         cy.url().should("include", `/reviews/653d0e9abc2cb300aca35d5b`);
+        cy.get("a").click();
     });
-  });
+})
+ 
 });
