@@ -19,6 +19,13 @@ describe("Filtering", () => {
     cy.visit("/");
   });
 
+
+
+//   Objective: Display movies with a specific term in the title and handle no matches.
+//      Test Steps:
+//          Search movies using the term 'm' in the title.
+//          Verify that movies displayed match the search term.
+//          Handle the scenario when there are no matches for a given term, such as 'xyxxzyyzz'.
   describe("By movie title", () => {
     it("only display movies with 'm' in the title", () => {
       const searchString = "m";
@@ -40,6 +47,13 @@ describe("Filtering", () => {
   });
 
 
+
+
+
+//   Objective: Show movies based on the selected genre.
+//      Test Steps:
+//          Select a particular genre (e.g. Comedy) from the genre dropdown.
+//          Validate that displayed movies correspond to the selected genre.
   describe("By movie genre", () => {
     it("show movies with the selected genre", () => {
       const selectedGenreId = 35;
@@ -56,6 +70,18 @@ describe("Filtering", () => {
       });
     });
   });
+
+
+
+
+
+
+
+//   Objective: Display movies that satisfy both genre and title filters.
+//       Test Steps:
+//          Set the genre filter to 'Horror' and the title filter to 'five'.
+//          Validate the displayed movies that meet both filters.
+//          Note: Ensure understanding the logic for expected length 0 if encountered.
   describe("Combined genre and title", () => {
     let movies; 
   
