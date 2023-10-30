@@ -31,6 +31,9 @@ describe("The favourites feature", () => {
       cy.get(".MuiCardHeader-root").eq(1).find("svg").should("not.exist");
       cy.get("button[aria-label='add to favorites']").eq(1).click();
       cy.get(".MuiCardHeader-root").eq(1).find("svg");
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -60,6 +63,14 @@ describe("The favourites feature", () => {
         .find("p")
         .contains(movies[3].title);
     });
-    it("removes deleted movies", () => {});
+    if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
+    it("removes deleted movies", () => {
+
+        if (!Cypress.config("showPassed")) {
+            cy.log("Successfully navigated to the movie home silently.");
+          }
+    });
   });
 });

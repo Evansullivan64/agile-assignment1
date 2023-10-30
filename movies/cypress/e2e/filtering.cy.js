@@ -38,11 +38,17 @@ describe("Filtering", () => {
       cy.get(".MuiCardHeader-content").each(($card, index) => {
         cy.wrap($card).find("p").contains(matchingMovies[index].title);
       });
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
     it("handles case when there are no matches", () => {
       const searchString = "xyxxzyyzz";
       cy.get("#filled-search").clear().type(searchString); // Enter m in text box
       cy.get(".MuiCardHeader-content").should("have.length", 0);
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -68,6 +74,9 @@ describe("Filtering", () => {
       cy.get(".MuiCardHeader-content").each(($card, index) => {
         cy.wrap($card).find("p").contains(matchingMovies[index].title);
       });
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 
@@ -128,6 +137,9 @@ describe("Filtering", () => {
       cy.get(".MuiCardHeader-content").each(($card, index) => {
         cy.wrap($card).find("p").contains(combinedMatchingMovies[index].title);
       });
+      if (!Cypress.config("showPassed")) {
+        cy.log("Successfully navigated to the movie home silently.");
+      }
     });
   });
 });
