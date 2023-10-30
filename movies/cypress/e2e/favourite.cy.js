@@ -17,6 +17,15 @@ describe("The favourites feature", () => {
     cy.visit("/");
   });
 
+
+
+
+
+  // Objective: Verify that selecting a movie as a favorite correctly shows the red heart icon.
+//      Test Steps:
+//          Verify the absence of the heart icon for a non-favorite movie card.
+//          Select a movie as a favorite by clicking the corresponding heart icon.
+//          Validate the appearance of the red heart icon on the selected movie card.
   describe("Selecting favourites", () => {
     it("selected movie card shows the red heart", () => {
       cy.get(".MuiCardHeader-root").eq(1).find("svg").should("not.exist");
@@ -25,6 +34,14 @@ describe("The favourites feature", () => {
     });
   });
 
+
+
+
+//   Objective: Ensure only favorited movies are listed on the Favorites page.
+//      Test Steps:
+//          Tag two movies as favorites and navigate to the Favorites page.
+//          Confirm that only the favorited movies are listed on the page.
+//          Check that the listed movies match the tagged movies by their titles.
   describe("The favourites page", () => {
     beforeEach(() => {
       // Select two favourites and navigate to Favourites page
