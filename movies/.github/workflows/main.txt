@@ -1,0 +1,44 @@
+# name: Cypress Tests
+//change this file to .yml extension to work
+# on:
+#   push:
+#     branches: [ main ] # Adjust branch names as needed
+#   pull_request:
+#     branches: [ main ] # Adjust branch names as needed
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Install Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18.18.0' # Choose the Node.js version you need
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Build project 
+#         run: npm run build 
+
+#   test:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Install Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18.18.0'
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Run Cypress tests
+#         run: npx cypress run

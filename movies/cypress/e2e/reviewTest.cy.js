@@ -104,4 +104,34 @@ describe('Review Form Interaction', () => {
         .should('be.visible')
         .and('contain', 'Review is too short');
     });
+
+
+    it('Displays an error message for missing/invalid author name', () => {
+      cy.visit("/");
+      cy.get("button[aria-label='add to favorites']").eq(0).click();
+      cy.get("button").contains("Favorites").click();
+      cy.get(".MuiCardActions-root").eq(0).find("a[href='/reviews/form']").click();
+  
+      const invalidAuthorName = "john marsten"; // Empty string or an invalid author name
+  
+      // Enter an invalid/empty author name
+      cy.get('input[name="author"]').type(invalidAuthorName).clear();
+  
+      const validReview = 'This movie was amazing! It kept me engaged throughout the entire story.';
+  
+      // Enter a valid review
+      cy.get('textarea[name="review"]').type(validReview);
+  
+      // Select 'Good' rating
+      cy.get("#select-rating").click();
+      cy.get("li").contains("Good").click();
+  
+      // Click the 'Submit' button
+      cy.get('button[type="submit"]').click();
+  
+      cy.get('p.MuiTypography-root.MuiTypography-h6.css-2ulfj5-MuiTypography-root')
+      .should('be.visible')
+      .and('contain', 'Name is required');
+  });
+  
   });
