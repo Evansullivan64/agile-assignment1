@@ -1,3 +1,5 @@
+import checkErrorMessageForInvalidAuthor from "../support/commands"
+
 // Scenario 1: Successfully Submits a Review with Valid Inputs
 //  Description:
 //      This test case checks the successful submission of a review with valid input values, such as author name, a sufficiently long review, and a selected rating.
@@ -105,33 +107,23 @@ describe('Review Form Interaction', () => {
         .and('contain', 'Review is too short');
     });
 
-
     it('Displays an error message for missing/invalid author name', () => {
       cy.visit("/");
       cy.get("button[aria-label='add to favorites']").eq(0).click();
       cy.get("button").contains("Favorites").click();
       cy.get(".MuiCardActions-root").eq(0).find("a[href='/reviews/form']").click();
-  
+    
       const invalidAuthorName = "john marsten"; // Empty string or an invalid author name
-  
-      // Enter an invalid/empty author name
+    
+      // Use the custom command to check the error message
       cy.get('input[name="author"]').type(invalidAuthorName).clear();
-  
       const validReview = 'This movie was amazing! It kept me engaged throughout the entire story.';
-  
-      // Enter a valid review
       cy.get('textarea[name="review"]').type(validReview);
-  
-      // Select 'Good' rating
       cy.get("#select-rating").click();
       cy.get("li").contains("Good").click();
-  
-      // Click the 'Submit' button
-      cy.get('button[type="submit"]').click();
-  
-      cy.get('p.MuiTypography-root.MuiTypography-h6.css-2ulfj5-MuiTypography-root')
-      .should('be.visible')
-      .and('contain', 'Name is required');
-  });
+    
+      // Use the custom command to check for the error message
+      cy.checkErrorMessageForInvalidAuthor();
+    });
   
   });
