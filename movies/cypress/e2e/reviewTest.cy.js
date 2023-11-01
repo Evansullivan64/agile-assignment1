@@ -1,4 +1,5 @@
-import checkErrorMessageForInvalidAuthor from "../support/commands"
+import checkErrorMessageForInvalidAuthor from "../support/commands";
+import selectDropdownOption from "../support/commands"
 
 // Scenario 1: Successfully Submits a Review with Valid Inputs
 //  Description:
@@ -97,8 +98,9 @@ describe('Review Form Interaction', () => {
       cy.get('textarea[name="review"]').type(validReview);
   
       // Select 'Excellent' rating
-      cy.get("#select-rating").click();
-      cy.get("li").contains("Good").click();
+      // cy.get("#select-rating").click();
+      // cy.get("li").contains("Good").click();
+      cy.get('#select-rating').selectDropdownOption('Good');
   
       cy.get('button[type="submit"]').click();
   
@@ -113,16 +115,17 @@ describe('Review Form Interaction', () => {
       cy.get("button").contains("Favorites").click();
       cy.get(".MuiCardActions-root").eq(0).find("a[href='/reviews/form']").click();
     
-      const invalidAuthorName = "john marsten"; // Empty string or an invalid author name
+      const invalidAuthorName = "john marsten"; 
     
-      // Use the custom command to check the error message
+      
       cy.get('input[name="author"]').type(invalidAuthorName).clear();
+
       const validReview = 'This movie was amazing! It kept me engaged throughout the entire story.';
       cy.get('textarea[name="review"]').type(validReview);
       cy.get("#select-rating").click();
       cy.get("li").contains("Good").click();
     
-      // Use the custom command to check for the error message
+      
       cy.checkErrorMessageForInvalidAuthor();
     });
   

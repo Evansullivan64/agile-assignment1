@@ -7,3 +7,9 @@ Cypress.Commands.add('checkErrorMessageForInvalidAuthor', () => {
       .should('be.visible')
       .and('contain', 'Name is required');
   });
+
+  Cypress.Commands.add('selectDropdownOption', { prevSubject: 'element' }, (subject, option) => {
+    return cy.wrap(subject).click() 
+      .get('li').contains(option).click() 
+      .parent() 
+  });
