@@ -43,8 +43,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Cypress tests
-        uses: cypress/browsers:node18.12.0-chrome106-ff106
+        uses: cypress-io/github-action@v2
         with:
           start: 'npx serve -s ./app/build -l 3000 &'
           wait-on: 'http://localhost:3000'
           browser: chrome
+          working-directory: ./movies
