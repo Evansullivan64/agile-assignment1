@@ -1,0 +1,71 @@
+name: CI
+# i just took the CI lab and converted it for giithub actions
+on: # Defines the events that trigger the workflow
+  push: # Triggers on push events
+    branches: # List of branches that will trigger the workflow
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  install_dependencies:
+    runs-on: windows-latest # Operating system for this job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./app
+      - name: Cache Cypress
+        uses: actions/cache@v2
+        with:
+          path: ./cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('cypress.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+      - name: Save node_modules as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: node_modules
+          path: ./app/node_modules
+
+  bundle_app:
+    runs-on: windows-latest
+    needs: [install_dependencies]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Restore node_modules artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node_modules
+          path: ./app/node_modules
+      - name: Build app
+        run: npm run build
+        working-directory: ./app
+
+  e2etest:
+    runs-on: windows-latest
+    needs: [bundle_app]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: 'npx serve -s ./app/build -l 3000 &'
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+
+ 
+ 
+  
