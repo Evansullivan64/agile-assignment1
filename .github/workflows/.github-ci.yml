@@ -1,42 +1,30 @@
 name: CI
-# i just took the CI lab and converted it for giithub actions
-on: # Defines the events that trigger the workflow
-  push: # Triggers on push events
-    branches: # List of branches that will trigger the workflow
+
+on:
+  push:
+    branches:
       - main
       - develop
+      - branchX
   pull_request:
     branches:
       - main
 
 jobs:
   install_dependencies:
-    runs-on: windows-latest # Operating system for this job
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Cache npm dependencies
-        uses: actions/cache@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: '14'
+      - name: Change working directory
+        run: cd C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies
       - name: Install dependencies
         run: npm ci
-        working-directory: ./app
-      - name: Cache Cypress
-        uses: actions/cache@v2
-        with:
-          path: ./cache/Cypress
-          key: ${{ runner.os }}-cypress-${{ hashFiles('cypress.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-
-      - name: Save node_modules as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: node_modules
-          path: ./app/node_modules
+        working-directory: ./movies
 
   bundle_app:
     runs-on: windows-latest
@@ -48,10 +36,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node_modules
-          path: ./app/node_modules
+          path: ./movies/node_modules
+      - name: Change working directory
+        run: cd C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies
       - name: Build app
         run: npm run build
-        working-directory: ./app
+        working-directory: ./movies
 
   e2etest:
     runs-on: windows-latest
@@ -65,7 +55,3 @@ jobs:
           start: 'npx serve -s ./app/build -l 3000 &'
           wait-on: 'http://localhost:3000'
           browser: chrome
-
- 
- 
-  
