@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install npm
+        run: npm install
       - name: Build app
         run: npm run build
         working-directory: ./movies
