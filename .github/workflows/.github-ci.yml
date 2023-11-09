@@ -29,11 +29,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Restore node_modules artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: node_modules
-          path: ./movies/node_modules
       - name: Build app
         run: npm run build
         working-directory: ./movies
