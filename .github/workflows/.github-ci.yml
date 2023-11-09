@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - develop
-      - branchX
   pull_request:
     branches:
       - main
@@ -19,9 +18,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18.18.0'
       - name: Change working directory
-        run: cd C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies
+        run: cd "C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies"
       - name: Install dependencies
         run: npm ci
         working-directory: ./movies
@@ -38,7 +37,7 @@ jobs:
           name: node_modules
           path: ./movies/node_modules
       - name: Change working directory
-        run: cd C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies
+        run: cd "C:\Users\evans\OneDrive - South East Technological University (Waterford Campus)\CLASSES\agile dev class\Assignment\movies"
       - name: Build app
         run: npm run build
         working-directory: ./movies
